@@ -88,8 +88,14 @@ public class ProductController {
 
     // delete product
     @DeleteMapping("/product/{id}")
-    public void deleteProduct(@PathVariable int id) {
-        service.deleteProduct(id);
+    public ResponseEntity<String> deleteProduct(@PathVariable int id) {
+        Product product = service.getProductById(id);
+
+        if (product != null) {
+            service.deleteProduct(id);
+            return ResponseEntity.ok().body("Product deleted");
+        }
+        return ResponseEntity.notFound().build();
     }
 
     // get product image
