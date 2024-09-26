@@ -107,4 +107,10 @@ public class ProductController {
         return ResponseEntity.ok().contentType(MediaType.valueOf(product.getImageType())).body(imageBytes);
     }
 
+    // search products
+    @GetMapping("/products/search/{keyword}")
+    public ResponseEntity<List<Product>> searchProducts(@PathVariable String keyword) {
+        return ResponseEntity.ok().body(service.searchProducts(keyword));
+    }
+
 }

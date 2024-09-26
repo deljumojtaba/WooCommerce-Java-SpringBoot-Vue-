@@ -9,6 +9,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.WebApi.webApi.model.Product;
 import com.WebApi.webApi.repository.ProductRepo;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class ProductService {
 
@@ -54,6 +56,11 @@ public class ProductService {
 
     public void deleteProduct(int id) {
         repo.deleteById(id);
+    }
+
+    @Transactional
+    public List<Product> searchProducts(String keyword) {
+        return repo.searchProducts(keyword);
     }
 
 }
