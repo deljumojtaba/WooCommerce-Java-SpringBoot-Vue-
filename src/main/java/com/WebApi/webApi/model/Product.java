@@ -11,6 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,14 +32,16 @@ public class Product {
     @Column(nullable = true, columnDefinition = "varchar(255) default 'Default Description'")
     private String description;
 
-    @Column(nullable = false, columnDefinition = "decimal(10,2) default 0.0")
+    @Column(nullable = false)
     private BigDecimal price;
 
     @Column(nullable = false, columnDefinition = "int default 1")
     private int quantity;
 
-    @Column(nullable = true, columnDefinition = "varchar(255) default 'default.png'")
-    private String image;
+    private String imageName;
+    private String imageType;
+    @Lob
+    private byte[] imageBytes;
 
     @Column(nullable = true, columnDefinition = "varchar(255) default 'Uncategorized'")
     private String category;

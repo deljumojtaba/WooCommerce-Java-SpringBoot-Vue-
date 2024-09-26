@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.WebApi.webApi.model.Product;
 import com.WebApi.webApi.repository.ProductRepo;
@@ -22,8 +23,13 @@ public class ProductService {
         return repo.findById(id).orElse(null);
     }
 
-    public void addProduct(Product product) {
-        repo.save(product);
+    public Product addProduct(Product product, MultipartFile imageFile) throws Exception {
+
+        product.setImageName(imageFile.getOriginalFilename());
+        product.setImageType(imageFile.getContentType());
+        product.setImageBytes(imageFile.getBytes());
+
+        return repo.save(product);
     }
 
     public void updateProduct(int id, Product product) {
@@ -33,6 +39,13 @@ public class ProductService {
             existingProduct.setName(product.getName());
             existingProduct.setDescription(product.getDescription());
             existingProduct.setPrice(product.getPrice());
+            existingProduct.setQuantity(product.getQuantity());
+            existingProduct.setCategory(product.getCategory());
+            existingProduct.setBrand(product.getBrand());
+            existingProduct.setAvailable(product.getAvailable());
+            existingProduct.setImageName(product.getImageName());
+            existingProduct.setImageType(product.getImageType());
+            existingProduct.setImageBytes(product.getImageBytes());
             repo.save(existingProduct);
         } else {
             System.out.println("Product not found");
